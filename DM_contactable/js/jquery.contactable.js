@@ -71,7 +71,7 @@
 				submitHandler: function() {
 					$('.holder').hide();
 					$('#loading').show();
-					$.post('plugins/DM_contactable/mail.php',{subject:defaults.subject, name:$('#name').val(), email:$('#email').val(), comment:$('#comment').val()},
+					$.post(defaults.siteUrl + 'plugins/DM_contactable/mail.php',{subject:defaults.subject, name:$('#name').val(), email:$('#email').val(), comment:$('#comment').val()},
 					function(data){
 						$('#loading').css({display:'none'}); 
 						if( data == 'success') {

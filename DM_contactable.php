@@ -82,7 +82,7 @@ i18n_merge($thisfile_contactable,$ct_language);
 add_action('theme-sidebar','createSideMenu',array($thisfile_contactable, i18n_r($thisfile_contactable.'/CONTACTABLE_TITLE'))); 
 
 function contactableInit(){
-	global $thisfile_contactable,$ct_name,$ct_email,$ct_message,$ct_language,$ct_emailsubject,$ct_subject,$ct_recievedMsg,$ct_disclaimer,$ct_buttonText,$ct_notRecievedMsg,$ct_hideOnSubmit;
+	global $thisfile_contactable,$ct_name,$ct_email,$ct_message,$ct_language,$ct_emailsubject,$ct_subject,$ct_recievedMsg,$ct_disclaimer,$ct_buttonText,$ct_notRecievedMsg,$ct_hideOnSubmit,$SITEURL;
 	
 	echo '<script type="text/javascript">window.onload = function() {
 	$("<div id=\'contact\'> </div>").appendTo("body");
@@ -95,8 +95,9 @@ function contactableInit(){
 			notRecievedMsg : "'.$ct_notRecievedMsg.'",
 			disclaimer : "'.$ct_disclaimer.'",
 			hideOnSubmit: "'.$ct_hideOnSubmit.'",
-			buttonText: "'.$ct_buttonText.'"
-	 });		
+			buttonText: "'.$ct_buttonText.'",
+			siteUrl: "'.$SITEURL.'"
+	});		
 
 	}</script>';
 }
