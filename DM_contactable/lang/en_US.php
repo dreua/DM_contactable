@@ -21,7 +21,7 @@ $i18n = array (
 	"CONTACTABLE_HIDEONSUBMIT" => 'Hide form after submit (true or false)',
 	"CONTACTABLE_NOTRECIEVEDMSG" => 'Not Recieved Message',
 	"CONTACTABLE_LANGUAGE" => 'Select a language',
-	 "CONTACTABLE_HIDEONSUBMIT_YES" => 'Yes',
-    "CONTACTABLE_HIDEONSUBMIT_NO" => 'No'
-	
+	"CONTACTABLE_HIDEONSUBMIT_YES" => 'Yes',
+	"CONTACTABLE_HIDEONSUBMIT_NO" => 'No',
+	"CONTACTABLE_BUTTONTEXT" => 'Text on send Button'
 );

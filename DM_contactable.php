@@ -45,6 +45,7 @@ if (file_exists($DM_contactable_config_file)) {
 	$ct_recievedMsg = $x->recievedmsg;
 	$ct_notRecievedMsg = $x->notrecievedmsg;
 	$ct_disclaimer = $x->disclaimer;
+	$ct_buttonText = $x->buttontext;
 	$ct_hideOnSubmit = $x->hideonsubmit;
 	$ct_language=$x->language;
 } else {
@@ -57,6 +58,7 @@ if (file_exists($DM_contactable_config_file)) {
 	$ct_recievedMsg = 'Thank you for your message';
 	$ct_notRecievedMsg = 'Sorry but your message could not be sent, try again later';
 	$ct_disclaimer = '';
+	$ct_buttonText = 'Send';
 	$ct_hideOnSubmit = true;
 	$xml = @new SimpleXMLElement('<item></item>');
 	$xml->addChild('emailaddr', $ct_emailaddr);
@@ -65,10 +67,11 @@ if (file_exists($DM_contactable_config_file)) {
 	$xml->addChild('name', $ct_name);
 	$xml->addChild('email', $ct_email);
 	$xml->addChild('message', stripcslashes($ct_message));
-    $xml->addChild('recievedmsg', stripcslashes($ct_recievedMsg));
-    $xml->addChild('notrecievedmsg', stripcslashes($ct_notRecievedMsg));
-    $xml->addChild('disclaimer', stripcslashes($ct_disclaimer));
-    $xml->addChild('hideonsubmit', $ct_hideOnSubmit);
+	$xml->addChild('recievedmsg', stripcslashes($ct_recievedMsg));
+	$xml->addChild('notrecievedmsg', stripcslashes($ct_notRecievedMsg));
+	$xml->addChild('disclaimer', stripcslashes($ct_disclaimer));
+	$xml->addChild('buttontext', stripcslashes($ct_buttonText));
+	$xml->addChild('hideonsubmit', $ct_hideOnSubmit);
 	$xml->asXML($DM_contactable_config_file);
 }
 
@@ -79,7 +82,7 @@ i18n_merge($thisfile_contactable,$ct_language);
 add_action('theme-sidebar','createSideMenu',array($thisfile_contactable, i18n_r($thisfile_contactable.'/CONTACTABLE_TITLE'))); 
 
 function contactableInit(){
-	global $thisfile_contactable,$ct_name,$ct_email,$ct_message,$ct_language,$ct_emailsubject,$ct_subject,$ct_recievedMsg,$ct_disclaimer,$ct_notRecievedMsg,$ct_hideOnSubmit;
+	global $thisfile_contactable,$ct_name,$ct_email,$ct_message,$ct_language,$ct_emailsubject,$ct_subject,$ct_recievedMsg,$ct_disclaimer,$ct_buttonText,$ct_notRecievedMsg,$ct_hideOnSubmit;
 	
 	echo '<script type="text/javascript">window.onload = function() {
 	$("<div id=\'contact\'> </div>").appendTo("body");
@@ -91,7 +94,8 @@ function contactableInit(){
 			recievedMsg : "'.$ct_recievedMsg.'",
 			notRecievedMsg : "'.$ct_notRecievedMsg.'",
 			disclaimer : "'.$ct_disclaimer.'",
-			hideOnSubmit: "'.$ct_hideOnSubmit.'"
+			hideOnSubmit: "'.$ct_hideOnSubmit.'",
+			buttonText: "'.$ct_buttonText.'"
 	 });		
 
 	}</script>';
@@ -129,7 +133,7 @@ function DM_contactable_doheader(){
  *
  */
 function DM_contactable_show() {
-	global $DM_contactable_config_file, $thisfile_contactable,$ct_language, $ct_emailaddr, $ct_name,$ct_email,$ct_message, $ct_recievedMsg, $ct_notRecievedMsg, $ct_disclaimer,$ct_hideOnSubmit, $ct_emailsubject ;
+	global $DM_contactable_config_file, $thisfile_contactable,$ct_language, $ct_emailaddr, $ct_name,$ct_email,$ct_message, $ct_recievedMsg, $ct_notRecievedMsg, $ct_buttonText, $ct_disclaimer,$ct_hideOnSubmit, $ct_emailsubject ;
 	$success=null;$error=null;
 	
 	// submitted form
@@ -143,6 +147,7 @@ function DM_contactable_show() {
 		$ct_recievedMsg = isset($_POST['recievedmsg']) ? $_POST['recievedmsg'] : $ct_recievedMsg;
 		$ct_notRecievedMsg = isset($_POST['notrecievedmsg']) ? $_POST['notrecievedmsg'] : $ct_notRecievedMsg;
 		$ct_disclaimer = isset($_POST['disclaimer']) ? $_POST['disclaimer'] : $ct_disclaimer;
+		$ct_buttonText = isset($_POST['buttontext']) ? $_POST['buttontext'] : $ct_buttonText;
 		$ct_hideOnSubmit = isset($_POST['hideonsubmit']) ? $_POST['hideonsubmit'] : $ct_hideOnSubmit;
 		# if there are no errors, Save data
 		if (!$error) {
@@ -153,9 +158,10 @@ function DM_contactable_show() {
 			$xml->addChild('name', $ct_name);
 			$xml->addChild('email', $ct_email);
 			$xml->addChild('message', stripcslashes($ct_message));
-            $xml->addChild('recievedmsg', stripcslashes($ct_recievedMsg));
-            $xml->addChild('notrecievedmsg', stripcslashes($ct_notRecievedMsg));
-            $xml->addChild('disclaimer', stripcslashes($ct_disclaimer));
+			$xml->addChild('recievedmsg', stripcslashes($ct_recievedMsg));
+			$xml->addChild('notrecievedmsg', stripcslashes($ct_notRecievedMsg));
+			$xml->addChild('buttontext', stripcslashes($ct_buttonText));
+			$xml->addChild('disclaimer', stripcslashes($ct_disclaimer));
 			$xml->addChild('hideonsubmit', $ct_hideOnSubmit);
 			
 			if (! $xml->asXML($DM_contactable_config_file)) {
@@ -171,6 +177,7 @@ function DM_contactable_show() {
 				$ct_recievedMsg = $x->recievedmsg;
 				$ct_notRecievedMsg = $x->notrecievedmsg;
 				$ct_disclaimer = $x->disclaimer;
+				$ct_buttonText = $x->buttontext;
 				$ct_hideOnSubmit = $x->hideonsubmit;
 				$success = i18n_r('SETTINGS_UPDATED');
 			}
@@ -200,6 +207,7 @@ function DM_contactable_show() {
 		<p><label for="recievedmsg" ><?php i18n($thisfile_contactable.'/CONTACTABLE_RECIEVEDMSG'); ?></label><input id="recievedmsg" name="recievedmsg" class="text" value="<?php echo $ct_recievedMsg; ?>" /></p>
 		<p><label for="notrecievedmsg" ><?php i18n($thisfile_contactable.'/CONTACTABLE_NOTRECIEVEDMSG'); ?></label><input id="notrecievedmsg" name="notrecievedmsg" class="text" value="<?php echo $ct_notRecievedMsg; ?>" /></p>
 		<p><label for="disclaimer" ><?php i18n($thisfile_contactable.'/CONTACTABLE_DISCLAIMER'); ?></label><input id="disclaimer" name="disclaimer" class="text" value="<?php echo $ct_disclaimer; ?>" /></p>
+		<p><label for="buttontext" ><?php i18n($thisfile_contactable.'/CONTACTABLE_BUTTONTEXT'); ?></label><input id="buttontext" name="buttontext" class="text" value="<?php echo $ct_buttonText; ?>" /></p>
 		<p><label for="hideOnSubmit" ><?php i18n($thisfile_contactable.'/CONTACTABLE_HIDEONSUBMIT'); ?></label><select name="hideonsubmit"><option value="true"><?php i18n($thisfile_contactable.'/CONTACTABLE_HIDEONSUBMIT_YES'); ?><option  value="false"><?php i18n($thisfile_contactable.'/CONTACTABLE_HIDEONSUBMIT_NO'); ?></select></p>
 		<p><input type="submit" id="submit" class="submit" value="<?php i18n('BTN_SAVESETTINGS'); ?>" name="submit" /></p>
 	</form>

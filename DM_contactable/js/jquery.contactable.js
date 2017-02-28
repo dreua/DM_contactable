@@ -5,8 +5,6 @@
  * Dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) 
  * and GPL (http://www.opensource.org/licenses/gpl-license.php) licenses.
  *
- * Revision: $Id: jquery.contactable.js 2010-01-18 $
- *
  */
 
 //extend the plugin
@@ -23,7 +21,8 @@
 			recievedMsg : 'Thank you for your message',
 			notRecievedMsg : 'Sorry but your message could not be sent, try again later',
 			disclaimer: '',
-			hideOnSubmit: true
+			hideOnSubmit: true,
+			buttonText: 'Send'
 		};
 
 		//call in the default otions
@@ -31,7 +30,7 @@
 		//act upon the element that is passed into the design    
 		return this.each(function(options) {
 			//construct the form
-			$(this).html('<div id="contactable"></div><form id="contactForm" method="" action=""><div id="loading"></div><div id="callback"></div><div class="holder"><p><label for="name">'+defaults.name+' <span class="red"> * </span></label><br /><input id="name" class="contact" name="name" /></p><p><label for="email">'+defaults.email+'<span class="red"> * </span></label><br /><input id="email" class="contact" name="email" /></p><p><label for="comment">'+defaults.message+'<span class="red"> * </span></label><br /><textarea id="comment" name="comment" class="comment" rows="4" cols="30" ></textarea></p><p><input class="submit" type="submit" value="Send"/></p><p class="disclaimer">'+defaults.disclaimer+'</p></div></form>');
+			$(this).html('<div id="contactable"></div><form id="contactForm" method="" action=""><div id="loading"></div><div id="callback"></div><div class="holder"><p><label for="name">'+defaults.name+' <span class="red"> * </span></label><br /><input id="name" class="contact" name="name" /></p><p><label for="email">'+defaults.email+'<span class="red"> * </span></label><br /><input id="email" class="contact" name="email" /></p><p><label for="comment">'+defaults.message+'<span class="red"> * </span></label><br /><textarea id="comment" name="comment" class="comment" rows="4" cols="30" ></textarea></p><p><input class="submit" type="submit" value="'+defaults.buttonText+'"/></p><p class="disclaimer">'+defaults.disclaimer+'</p></div></form>');
 			//show / hide function
 			$('div#contactable').toggle(function() {
 				$('#overlay').css({display: 'block'});
